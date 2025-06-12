@@ -1,8 +1,9 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: process.env.REACT_APP_API_URL + '/api'  // This ensures requests go to /api/* on your backend
+  baseURL: process.env.REACT_APP_API_URL + '/api'  
 });
+
 
 // Add token if present
 API.interceptors.request.use(config => {
