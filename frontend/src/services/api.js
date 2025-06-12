@@ -1,26 +1,31 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || '/api'
+  baseURL: process.env.REACT_APP_API_URL + '/api'  // This ensures requests go to /api/* on your backend
 });
 
+// Add token if present
 API.interceptors.request.use(config => {
   const token = localStorage.getItem('token');
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
   return config;
 });
 
-export const register   = async (email, password) => {
+// Auth APIs
+export const register = async (email, password) => {
   const { data } = await API.post('/auth/register', { email, password });
   return data;
 };
 
-export const login      = async (email, password) => {
+export const login = async (email, password) => {
   const { data } = await API.post('/auth/login', { email, password });
   return data;
 };
 
-export const getNotes   = async () => {
+// Notes APIs
+export const getNotes = async () => {
   const { data } = await API.get('/notes');
   return data;
 };
